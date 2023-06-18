@@ -1,5 +1,5 @@
 .data
-    vetor: .word 3, 5, 4, 1, 2
+    vetor: .word 5, 4, 3, 2, 1
     tamanho: .word 5
     espaco: .asciiz " "
 
@@ -14,16 +14,14 @@ main:
     
 loop_externo:
 
-    	lw $t2, vetor($a0) # Registrador para armazenar o menor valor
-    	lw $t4, vetor($a0) # Armazena o valor do vetor A no índice i em t4
+    	lw $t2, vetor($a0) # Variavel para armazenar o menor valor
+    	lw $t4, vetor($a0) # Armazena o valor do vetor externo t4
     	
-    	move $t6, $a0 # armazena endereço do menor valor
+    	move $t6, $a0 # armazena o endereço do menor valor
     	addi $t3, $t1, 1 # Controle de iteraçoes do loop interno.
     	
     	addi $a1, $a0, 4 # Controla o endereço do vetor no loop interno
  
-    	
-    	
     
 	# loop_interno para percorrer o resto do vetor
 	loop_interno:
@@ -35,6 +33,8 @@ loop_externo:
     		addi $a1, $a1, 4 # Movimenta para o proximo indice do vetor interno
     
     		ble $t3, $t0, loop_interno
+    		
+    	j troca
     	
     	
     	#Substitui o valor de t2 pelo menor encontrado
@@ -49,7 +49,7 @@ loop_externo:
     		ble $t3, $t0, loop_interno
     		
     	
-    	
+troca:
     	sw $t2, vetor($a0) # Armazena o menor valor na posição do maior valor
     	sw $t4, vetor($t6) #Armazena o maior valor na posição original do menor valor
     	
@@ -74,13 +74,4 @@ loop_print:
         addi $t1, $t1, 1       # Incrementa o contador
         addi $t2, $t2, 4       # Avança para o próximo elemento do vetor
 
-        ble $t1, $t0, loop_print  # Repete o loop até alcançar o tamanho
-    	
-    		
-	
-
-	
- 
- 
- 	
-    
+        ble $t1, $t0, loop_print  # Repete o loop até alcançar n
