@@ -4,7 +4,6 @@
     espaco: .asciiz " "
 
 .text
-.globl main
 
 main:
    
