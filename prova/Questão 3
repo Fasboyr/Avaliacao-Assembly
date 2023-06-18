@@ -75,7 +75,7 @@ loop_print:
         addi $t1, $t1, 1       # Incrementa o contador
         addi $t2, $t2, 4       # Avança para o próximo elemento do vetor
 
-        ble $t1, $t0, loop_print  # Repete o loop até alcançar n
+        ble $t1, $t0, loop_print  # Repete o loop até alcançar o tamanho
     	
     		
 	
