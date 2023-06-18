@@ -1,0 +1,55 @@
+.data
+    vetor: .word 64, 25, 12, 22, 11
+    tamanho: .word 5
+
+.text
+.globl main
+
+main:
+   
+    lw $t0, tamanho # Carrega o tamanho do vetor em $t0
+    lw $s0, vetor # vetor no indice 0
+    
+    la $s1, vetor 
+    addi $s1, $s1, 4 # vetor no indice 1 
+ 
+    li $t1, 0   # $t1 guarda o índice i
+    
+loop_externo:
+
+    li $t2, 0 # Variavel para armazenar o menor valor
+    addi $t3, $t1, 1 # $t3 armazena o índice j que é i + 1.
+ 
+    
+    la $s1, $s0 # Copia o vetor A em s1 criando um vetor B
+    addi $s1, $s1, 4 # Movimenta para o proximo indice do vetor para que  o vetor B seja sempre o proximo
+ 
+    lw $t4, ($s0) # Armazena o valor do vetor A em índice i em t4
+    
+# loop_interno para percorrer o resto do vetor
+loop_interno:
+
+    lw $t5, ($s1) # Armazena o valor do vetor B em indíce j em t5
+    
+    blt $t5 , $t4, troca_menor # Se o valor de t5 for menor que t4, desvia para uma troca
+    
+    addi $t3, $t3, 1 # aumenta o contaor
+    addi $s1, $s1, 4 # Movimenta para o proximo indice do vetor B
+    
+    ble $t3, $t0, loop_interno
+    
+troca_menor:
+
+    move $t2, $t5 # Armazena o menor valor(t5) em t2
+    
+    addi $t3, $t3, 1 # aumenta o contaor
+    addi $s1, $s1, 4 # Movimenta para o proximo indice do vetor B
+    
+    ble $t3, $t0, loop_interno
+	
+
+	
+ 
+ 
+ 	
+    
