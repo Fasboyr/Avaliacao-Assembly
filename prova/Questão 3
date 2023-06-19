@@ -1,5 +1,5 @@
 .data
-    vetor: .word 4, 7, 3, 8, 1
+    vetor: .word 45, 74, 34, 88, 13
     tamanho: .word 5
     espaco: .asciiz " "
 
