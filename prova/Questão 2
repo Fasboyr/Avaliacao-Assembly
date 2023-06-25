@@ -3,37 +3,28 @@ n:      .word 5         # Número de elementos no vetor
 vetor:  .word 2, 6, 37, 48, 1   # Vetor de elementos
 
 .text
-.globl main
-
 main:
     # Carrega o valor de n em $t0
     lw $t0, n
 
-    # Inicializa os registradores
     li $t1, 0             # Contador
-    li $t2, 0             # Variável temporária para armazenar o maior valor
+    li $t2, 0             # Variável para armazenar o maior valor
     la $t3, vetor         # Endereço inicial do vetor
+    
     loop:
-        # Carrega o valor do elemento atual em $t4
-        lw $t4, ($t3)
-
-        # Compara o valor atual com o maior valor
-        blt $t4, $t2, proximo_num # Branch se o valor de $t4 for menor que $t2, desvie para 'proximo_num'
+        lw $t4, ($t3)   # Carrega o valor do elemento atual em $t4
         
-        
-     	#Se $t4 for maior que $t2, atualiza o maior valor
-        move $t2, $t4        # Atualiza o maior valor
+        blt $t4, $t2, proximo_num # Se o valor de $t4 for menor que $t2, desvie para 'proximo_num'
+    	
+    	#Como não desviou, $t4 é maior que $t2
+        move $t2, $t4   #Atualiza a variavel com o novo maior valor
      
-        addi $t3, $t3, 4 # Incrementa o indice
-        addi $t1, $t1, 1 # Aumenta o contador em 1
-        ble $t1, $t0, loop  #Se o contador for igual ou menor que n, repete o loop
     proximo_num:
-
-        # Incrementa o índice
-        addi $t3, $t3, 4
+    
+        addi $t3, $t3, 4  # Incrementa o índice
         addi $t1, $t1, 1 # Aumenta o contador em 1
-        # Verifica se chegou ao fim do vetor
-        ble $t1, $t0, loop #Se o contador for igual ou menor que n, repete o loop
+ 
+        ble $t1, $t0, loop #Se o contador for menor que n, repete o loop
 
     # Imprime o resultado
     li $v0, 1             # Código do sistema para imprimir inteiro
@@ -41,5 +32,5 @@ main:
     syscall
 
     # Termina a execução do programa
-    li $v0, 10            # Código do sistema para finalizar programa
+    li $v0, 10            # Código do sistema para finalizar o programa
     syscall
