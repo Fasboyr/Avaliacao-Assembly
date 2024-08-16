@@ -1,0 +1,48 @@
+.data
+vetor: .word 0:400   # Vetor para armazenar os quadrados perfeitos
+n:     .word 10      # Valor de n
+quebra_linha: .asciiz "\n"
+
+.text
+
+main:
+    # Carrega o valor de n em $t0
+    lw $t0, n
+
+
+    # Inicializa os registradores
+    li $t1, 1             # Inicializa contador
+    la $t2, vetor         # Endereço inicial do vetor
+
+    loop:
+        mul $t3, $t1, $t1 # Calcula o quadrado do contador 
+        sw $t3, ($t2) # Armazena o quadrado no vetor
+
+        addi $t1, $t1, 1 # Avança o contador para o próximo número
+        addi $t2, $t2, 4 # Avança para o próxmo índice do vetor 
+
+        ble $t1, $t0, loop # Verifica se o contador atingiu o valor de n
+
+    # Imprime a saída no terminal
+
+    la $t2, vetor         # Endereço inicial do vetor
+    li $t1, 0             # Inicializa contador
+
+    loop_print:
+    	li $v0, 1             # Código do sistema para imprimir inteiro
+        lw $a0, ($t2)          # Carrega o valor do vetor
+        move $a1, $t1          # Carrega o número atual para imprimir
+        syscall
+        
+        la $a0, quebra_linha # Carrega o endereço de quebra_linha no registrador a0
+	li $v0, 4 # Código para o syscall imprimir string
+	syscall
+
+        addi $t1, $t1, 1       # Incrementa o contador
+        addi $t2, $t2, 4       # Avança para o próxmo índice do vetor 
+
+        blt $t1, $t0, loop_print  # Repete o loop enquanto o contador for menor que n
+
+    # Termina a execução do programa
+    li $v0, 10            # Código do sistema para finalizar programa
+    syscall
